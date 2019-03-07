@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chown.pine.mapper.AdMapper">
+
+    <!--广告数据列信息-->
+    <sql id="AD_COLUMN">
+       advertisementId, advertisementName, advertisementUrl, imgUrl, createTime, isValid, advertisementType, targetId, memo, ext1, ext2
+    </sql>
+
+    <!-- 增加广告 供平台使用 -->
+    <insert id="add" parameterType="Ad">
+        INSERT INTO T_AD
+        (
+        <include refid="AD_COLUMN"/>
+        )
+        VALUES
+        (#{advertisementId}, #{advertisementName}, #{advertisementUrl}, #{imgUrl}, DATE_FORMAT(NOW(),"%Y-%m-%d %H:%i:%s"), #{isValid},
+        #{advertisementType}, #{targetId}, #{memo}, #{ext1}, #{ext2})
+    </insert>
+
+    <!-- 根据广告id查询广告 供平台使用 -->
+    <select id="queryAdById" parameterType="String" resultType="Ad">
+		SELECT <include refid="AD_COLUMN"/> FROM T_AD WHERE advertisementId = #{advertisementId}
+	</select>
+
+</mapper>
